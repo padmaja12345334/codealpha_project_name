@@ -1,0 +1,57 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+// Function to display a welcome message
+void displayWelcomeMessage() {
+    cout << "Hello! I am a simple chatbot. How can I help you today?" << endl;
+}
+
+// Function to get the chatbot's response based on keywords
+string getResponse(const string& userInput) {
+    // Define a map of keywords and responses
+    unordered_map<string, string> responses = {
+        {"hello", "Hi there! How can I assist you?"},
+        {"help", "Sure! What do you need help with?"},
+        {"name", "I am a simple chatbot created using C++."},
+        {"weather", "I'm not connected to the internet, so I can't provide weather updates."},
+        {"bye", "Goodbye! Have a great day!"}
+    };
+
+    // Check if the user input contains any of the keywords
+    for (const auto& pair : responses) {
+        if (userInput.find(pair.first) != string::npos) {
+            return pair.second;
+        }
+    }
+
+    // Default response if no keywords match
+    return "I'm sorry, I don't understand that. Can you please rephrase?";
+}
+
+int main() {
+    string userInput;
+    displayWelcomeMessage();
+
+    // Main loop for conversation
+    while (true) {
+        cout << "> ";
+        getline(cin, userInput);
+
+        // Convert user input to lowercase (basic normalization)
+        for (char& c : userInput) {
+            c = tolower(c);
+        }
+
+        string response = getResponse(userInput);
+        cout << response << endl;
+
+        // Exit the loop if the user says "bye"
+        if (userInput.find("bye") != string::npos) {
+            break;
+        }
+    }
+
+    return 0;
+}
